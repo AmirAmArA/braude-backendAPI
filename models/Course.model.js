@@ -21,7 +21,7 @@ const courseSchema = new Schema(
       type: [String],
       enum: daysEnum,
     },
-    students: [{ type: String }],
+    students: [{ type: mongoose.Schema.Types.ObjectId, ref: "Student" }],
   },
   { timestamps: true }
 );

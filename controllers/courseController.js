@@ -43,12 +43,7 @@ const updateCourse = async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).json({ error: "no such valid course" });
 
-  const course = await Course.findOneAndUpdate(
-    { _id: id },
-    {
-      ...req.body,
-    }
-  );
+  const course = await Course.findOneAndUpdate({ _id: id }, { ...req.body });
 
   if (!course) return res.status(400).json({ error: "No Such Course" });
   res.status(200).json(course);
