@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const coursesRoute = require("./routes/courses");
-
+const studentsRoute = require("./routes/students");
 require("dotenv").config();
 
 const app = express();
@@ -18,6 +18,7 @@ app.use((req, res, next) => {
 
 //Routes
 app.use("/api/courses", coursesRoute);
+app.use("/api/students", studentsRoute);
 
 mongoose.set("strictQuery", false);
 mongoose
