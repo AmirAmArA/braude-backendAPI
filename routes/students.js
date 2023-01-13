@@ -1,15 +1,14 @@
 const express = require("express");
-const Student = require("../models/Student.model");
 const router = express.Router();
 const {
-  getStudent,
+  getStudents,
   getSingleStudent,
   createStudent,
   deleteStudent,
   updateStudent,
-} = require("../controllers/courseController");
+} = require("../controllers/studentController");
 
-router.get("/", getStudent);
+router.get("/", getStudents);
 
 router.get("/:id", getSingleStudent);
 

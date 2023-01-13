@@ -1,7 +1,5 @@
 const Student = require("../models/Student.model");
 const mongoose = require("mongoose");
-const CourseModel = require("../models/Course.model");
-const StudentModel = require("../models/Student.model");
 
 //get all courses
 const getStudents = async (req, res) => {
@@ -16,9 +14,8 @@ const getSingleStudent = async (req, res) => {
     return res.status(404).json({ error: "no such valid id" });
 
   const student = await Student.findById(id);
-  !student
-    ? res.status(404).json({ error: " no such student" })
-    : res.status(200).json(student);
+  if (!student) return res.status(404).json({ error: " no such student" });
+  res.status(200).json(student);
 };
 
 //create a new student
@@ -38,9 +35,8 @@ const deleteStudent = async (req, res) => {
     return res.status(404).json({ error: "no such valid student" });
 
   const student = await StudentModel.findOneAndDelete({ _id: id });
-  !student
-    ? res.status(400).json({ error: "no such student" })
-    : res.status(200).json(student);
+  if (!student) return res.status(400).json({ error: "no such student" });
+  res.status(200).json(student);
 };
 
 //update a student
@@ -51,9 +47,8 @@ const updateStudent = async (req, res) => {
 
   const student = await Student.findOneAndUpdate({ _id: id }, { ...req.body });
 
-  !student
-    ? res.status(400).json({ error: "no such student" })
-    : res.status(200).json(student);
+  if (!student) return res.status(400).json({ error: "no such student" });
+  res.status(200).json(student);
 };
 
 module.exports = {
@@ -61,4 +56,5 @@ module.exports = {
   getSingleStudent,
   deleteStudent,
   updateStudent,
+  createStudent,
 };
