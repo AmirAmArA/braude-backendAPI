@@ -1,5 +1,5 @@
 const mongoose = require("mongoose");
-
+const Student = require("./Student.model");
 const Schema = mongoose.Schema;
 const daysEnum = [
   "Monday",
@@ -21,7 +21,7 @@ const courseSchema = new Schema(
       type: [String],
       enum: daysEnum,
     },
-    students: [{ type: String }],
+    students: [{ type: mongoose.Schema.Types.ObjectId, ref: Student }],
   },
   { timestamps: true }
 );
