@@ -1,5 +1,13 @@
 const express = require("express");
 const mongoose = require("mongoose");
+
+
+//edit by haya
+const cors = require('cors')
+const app = express()
+app.use(cors())
+//
+
 const coursesRoute = require("./routes/courses");
 const studentsRoute = require("./routes/students");
 require("dotenv").config();
