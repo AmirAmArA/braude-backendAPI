@@ -27,7 +27,7 @@ const createStudent = async (req, res) => {
     const student = await Student.create({ name, email, password });
     res.status(200).json(student);
   } catch (error) {
-    res.status(400).json({ error: error.message, req, data: req.body });
+    res.status(400).json({ error: error.message });
   }
 };
 //delete a student
