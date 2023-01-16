@@ -1,5 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
 const coursesRoute = require("./routes/courses");
 const studentsRoute = require("./routes/students");
 require("dotenv").config();
@@ -10,17 +11,12 @@ const uri = process.env.URI;
 
 //middlewares
 app.use(express.json());
-
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
-  ); // If needed
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "X-Requested-With,content-type"
-  ); // If needed
   console.log(req.path, req.method);
   next();
 });
