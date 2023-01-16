@@ -12,6 +12,8 @@ const uri = process.env.URI;
 app.use(express.json());
 
 app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+
   console.log(req.path, req.method);
   next();
 });
