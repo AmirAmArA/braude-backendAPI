@@ -22,7 +22,6 @@ const getSingleStudent = async (req, res) => {
 const createStudent = async (req, res) => {
   const { name, email, password } = req.body;
   try {
-    console.log(req);
     console.log(req.body);
     const student = await Student.create({ name, email, password });
     res.status(200).json(student);
