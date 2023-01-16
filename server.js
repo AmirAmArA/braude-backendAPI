@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const coursesRoute = require("./routes/courses");
 const studentsRoute = require("./routes/students");
+const bodyParser = require("body-parser");
 require("dotenv").config();
 
 const app = express();
@@ -11,6 +12,8 @@ const uri = process.env.URI;
 
 //middlewares
 app.use(express.json());
+app.use(bodyParser);
+
 app.use(
   cors({
     origin: "*",
