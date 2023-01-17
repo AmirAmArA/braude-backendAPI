@@ -20,14 +20,9 @@ const getSingleStudent = async (req, res) => {
 
 //create a new student
 const createStudent = async (req, res) => {
+  const { name, email, password } = req.body;
   try {
-    console.log(req);
-    console.log(req.body);
-    const student = await Student.create({
-      name: req.body.name,
-      email: req.body.email,
-      password: req.body.password,
-    });
+    const student = await Student.create({ name, email, password });
     res.status(200).json(student);
   } catch (error) {
     res.status(400).json({ error: error.message });
