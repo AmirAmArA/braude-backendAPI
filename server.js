@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const cors = require("cors");
 const coursesRoute = require("./routes/courses");
 const studentsRoute = require("./routes/students");
+const assignmentRoute = require("./routes/assignment");
 const bodyParser = require("body-parser");
 require("dotenv").config();
 
@@ -27,6 +28,7 @@ app.use((req, res, next) => {
 //Routes
 app.use("/api/courses", coursesRoute);
 app.use("/api/students", studentsRoute);
+app.use("/api/assignment", assignmentRoute);
 
 mongoose.set("strictQuery", false);
 mongoose
