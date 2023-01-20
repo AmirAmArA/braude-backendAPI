@@ -32,7 +32,7 @@ app.use((req, res, next) => {
 app.use("/api/courses", coursesRoute);
 app.use("/api/students", studentsRoute);
 app.use("/api/assignment", assignmentRoute);
-app.use("/api/submission", submissionRouter);
+// app.use("/api/submission", submissionRouter);
 
 mongoose.set("strictQuery", false);
 mongoose
