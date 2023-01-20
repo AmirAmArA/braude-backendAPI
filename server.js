@@ -19,7 +19,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(
   cors({
     origin: "*",
-    methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+    methods: ["GET", "HEAD", "PUT", "PATCH", "POST", "DELETE"],
+    preflightContinue: true,
   })
 );
 app.use((req, res, next) => {
