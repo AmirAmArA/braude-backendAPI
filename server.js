@@ -16,7 +16,7 @@ const uri = process.env.URI;
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use(cors());
+// app.use(cors());
 app.use((req, res, next) => {
   console.log(req.path, req.method);
   next();
