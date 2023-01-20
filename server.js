@@ -4,7 +4,7 @@ const cors = require("cors");
 const coursesRoute = require("./routes/courses");
 const studentsRoute = require("./routes/students");
 const assignmentRoute = require("./routes/assignments");
-const submissionRouter = require("./routes/submissions");
+// const submissionRouter = require("./routes/submissions");
 const bodyParser = require("body-parser");
 require("dotenv").config();
 
