@@ -34,7 +34,7 @@ const deleteStudent = async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).json({ error: "no such valid student" });
 
-  const student = await StudentModel.findByIdAndDelete(id);
+  const student = await Student.findOneAndDelete({ _id: id });
   if (!student) return res.status(400).json({ error: "no such student" });
   res.status(200).json(student);
 };
