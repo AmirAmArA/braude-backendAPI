@@ -19,14 +19,6 @@ const getSingleAssignment = async (req, res) => {
   res.status(200).json(assignemnt);
 };
 
-
-//Edit by haya
-// Validate the deadline field before saving the assignment
-Assignment.schema.path('deadline').validate((value) => {
-    return value !== null && value !== undefined;
-}, 'deadline is required');
-//end edit by haya
-
 // create a new assignment
 const createAssignment = async (req, res) => {
   const { name, deadline, course, assignemntStatus } = req.body;
