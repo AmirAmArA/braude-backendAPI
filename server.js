@@ -4,6 +4,7 @@ const cors = require("cors");
 const coursesRoute = require("./routes/courses");
 const studentsRoute = require("./routes/students");
 const assignmentRoute = require("./routes/assignments");
+const userRoute = require("./routes/users");
 // const submissionRouter = require("./routes/submissions");
 const bodyParser = require("body-parser");
 require("dotenv").config();
@@ -32,6 +33,7 @@ app.use("/api/courses", coursesRoute);
 app.use("/api/students", studentsRoute);
 app.use("/api/assignment", assignmentRoute);
 // app.use("/api/submission", submissionRouter);
+app.use("/api/user", userRoute);
 
 mongoose.set("strictQuery", false);
 mongoose
