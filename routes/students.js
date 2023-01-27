@@ -7,6 +7,9 @@ const {
   deleteStudent,
   updateStudent,
 } = require("../controllers/studentController");
+const requireAuth = require("../middlewares/requireAuth");
+
+router.use(requireAuth);
 
 router.get("/", getStudents);
 

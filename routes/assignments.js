@@ -8,6 +8,9 @@ const {
   deleteAssignment,
   updateAssignment,
 } = require("../controllers/assignmentController");
+const requireAuth = require("../middlewares/requireAuth");
+
+router.use(requireAuth);
 
 router.get("/", getAssignments);
 
