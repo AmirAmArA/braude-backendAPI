@@ -48,6 +48,7 @@ studentSchema.statics.login = async function (email, password) {
   const match = await bcrypt.compare(password, student.password);
 
   if (!match) throw Error("Incorrect password");
+  return student;
 };
 
 module.exports = mongoose.model("Student", studentSchema);

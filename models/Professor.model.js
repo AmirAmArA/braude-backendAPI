@@ -15,13 +15,13 @@ const professorSchema = new Schema({
 
 professorSchema.statics.login = async function (email, password) {
   if (!email || !password) throw Error("all fields must be filled");
-  const student = await this.findOne({ email });
+  const professor = await this.findOne({ email });
+  if (!professor) throw Error("Incorrect email");
 
-  if (!student) throw Error("Incorrect email");
-
-  const match = await bcrypt.compare(password, student.password);
+  const match = await bcrypt.compare(password, professor.password);
 
   if (!match) throw Error("Incorrect password");
+  return professor;
 };
 
 module.exports = mongoose.model("Professor", professorSchema);
