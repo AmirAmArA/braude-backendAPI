@@ -22,7 +22,7 @@ const getSingleStudent = async (req, res) => {
 const createStudent = async (req, res) => {
   const { name, email, password } = req.body;
   try {
-    const student = await Student.create({ name, email, password });
+    const student = await Student.signup(name, email, password);
     res.status(200).json(student);
   } catch (error) {
     res.status(400).json({ error: error.message });
