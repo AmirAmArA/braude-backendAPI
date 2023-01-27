@@ -5,7 +5,7 @@ const Professor = require("../models/Professor.model");
 const requireAuth = async (req, res, next) => {
   //verify Auth
   const { authorization } = req.headers;
-  const { role } = req.body;
+  const { role } = req.headers;
   if (!authorization) {
     return res.status(401).json({ error: "Authorization token required!" });
   }
