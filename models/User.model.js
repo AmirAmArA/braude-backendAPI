@@ -17,6 +17,18 @@ const userSchema = new Schema({
 });
 
 // a method to hash the passwords of the users
+userSchema.statics.login = async function (email, password) {
+  if (!email || !password) throw Error("all fields must be filled");
+  const user = await this.findOne({ email });
+
+  if (!user) throw Error("Incorrect email");
+
+  const match = await bcrypt.compare(password, user.password);
+
+  if (!match) throw Error("Incorrect password");
+};
+
+// a method to hash the passwords of the users
 userSchema.statics.signup = async function (email, password) {
   if (!email || !password) throw Error("all fields must be filled");
   if (!validator.isEmail(email)) throw Error("use a valid email");

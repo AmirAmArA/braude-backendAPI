@@ -1,6 +1,8 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const bcrypt = require("bcrypt");
 const SALT_WORK_FACTOR = 10;
+const validator = require("validator");
 
 const studentSchema = new Schema(
   {
@@ -22,25 +24,30 @@ const studentSchema = new Schema(
   { timestamps: true }
 );
 
-// studentSchema.pre("save", function (next) {
-//   const student = this;
+studentSchema.statics.signup = async function (name, email, password) {
+  if (!name || !email || !password) throw Error("all fields must be filled");
+  if (!validator.isEmail(email)) throw Error("use a valid email");
+  if (!validator.isStrongPassword(password)) throw Error("password not strong");
 
-//   // only hash the password if it has been modified (or is new)
-//   if (!student.isModified("password")) return next();
+  const exist = await this.findOne({ email });
 
-//   // generate a salt
-//   bcrypt.genSalt(SALT_WORK_FACTOR, function (err, salt) {
-//     if (err) return next(err);
+  if (exist) throw Error("Email already in use");
+  const salt = await bcrypt.genSalt(SALT_WORK_FACTOR);
+  const hashedPassword = await bcrypt.hash(password, salt);
 
-//     // hash the password using our new salt
-//     bcrypt.hash(student.password, salt, function (err, hash) {
-//       if (err) return next(err);
+  const student = await this.create({ email, name, password: hashedPassword });
+  return student;
+};
 
-//       // override the cleartext password with the hashed one
-//       student.password = hash;
-//       next();
-//     });
-//   });
-// });
+studentSchema.statics.login = async function (email, password) {
+  if (!email || !password) throw Error("all fields must be filled");
+  const student = await this.findOne({ email });
+
+  if (!student) throw Error("Incorrect email");
+
+  const match = await bcrypt.compare(password, student.password);
+
+  if (!match) throw Error("Incorrect password");
+};
 
 module.exports = mongoose.model("Student", studentSchema);
