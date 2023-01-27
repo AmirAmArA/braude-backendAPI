@@ -12,7 +12,6 @@ const loginUser = async (req, res) => {
     case "PROFESSOR":
       try {
         const user = await Professor.login(email, password);
-        console.log(user, "11");
 
         //create a token for login
         const token = createToken(user._id);
@@ -24,7 +23,6 @@ const loginUser = async (req, res) => {
     case "STUDENT":
       try {
         const user = await Student.login(email, password);
-        console.log("22");
 
         //create a token for login
         const token = createToken(user._id);

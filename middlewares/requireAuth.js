@@ -17,16 +17,22 @@ const requireAuth = async (req, res, next) => {
     switch (role) {
       case "PROFESSOR":
         req.user = await Professor.findOne({ _id }).select("_id");
+        if (!req.user)
+          return res.status(401).json({ error: "Request is not Authorized" });
+        next();
         break;
       case "STUDENT":
         req.user = await Student.findOne({ _id }).select("_id");
+        if (!req.user)
+          return res.status(401).json({ error: "Request is not Authorized" });
+        next();
         break;
       default:
+        return res.status(401).json({ error: "Request is not Authorized" });
     }
-    next();
   } catch (error) {
     console.log(error);
-    res.status(401).json({ error: "Request is not Authorized" });
+    return res.status(401).json({ error: "Request is not Authorized" });
   }
 };
 
