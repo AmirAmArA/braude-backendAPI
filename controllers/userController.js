@@ -24,7 +24,6 @@ const loginUser = async (req, res) => {
     case "STUDENT":
       try {
         const user = await Student.login(email, password);
-
         //create a token for login
         const token = createToken(user._id);
         res.status(200).json({ email, token });

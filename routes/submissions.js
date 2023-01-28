@@ -13,7 +13,7 @@ router.get("/", getSubmissions);
 
 router.get("/:id", getSingleSubmission);
 
-router.post("/add-a-assignment", createSubmission);
+router.post("/add-a-submission", createSubmission);
 
 router.delete("/:id", deleteSubmission);
 
