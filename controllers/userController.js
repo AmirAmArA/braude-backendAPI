@@ -7,7 +7,8 @@ const createToken = (_id) => {
 };
 
 const loginUser = async (req, res) => {
-  const { email, password, role } = req.body;
+  const { email, password } = req.body;
+  const { role } = req.headers;
   switch (role) {
     case "PROFESSOR":
       try {
