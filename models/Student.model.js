@@ -18,7 +18,6 @@ const studentSchema = new Schema(
       type: String,
       required: true,
       minlength: 8,
-      select: false,
     },
   },
   { timestamps: true }
@@ -42,7 +41,6 @@ studentSchema.statics.signup = async function (name, email, password) {
 studentSchema.statics.login = async function (email, password) {
   if (!email || !password) throw Error("all fields must be filled");
   const student = await this.findOne({ email });
-
   if (!student) throw Error("Incorrect email");
 
   const match = await bcrypt.compare(password, student.password);
