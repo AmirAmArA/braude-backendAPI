@@ -22,7 +22,6 @@ const getSingleAssignment = async (req, res) => {
 // create a new assignment
 const createAssignment = async (req, res) => {
   const { name, deadLine, course, assignemntStatus } = req.body;
-  console.log(req.body);
   try {
     const assignemnt = await Assignment.create({
       name,
