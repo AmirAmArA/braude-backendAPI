@@ -42,9 +42,9 @@ const deleteAssignment = async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).json({ error: "No Such Valid Assignment" });
 
-  const assignemnt = await Assignment.findOneAndDelete({ _id: id });
-  if (!assignemnt) return res.status(400).json({ error: "No Such Assignment" });
-  res.status(200).json(assignemnt);
+  const assignment = await Assignment.findOneAndDelete({ _id: id });
+  if (!assignment) return res.status(400).json({ error: "No Such Assignment" });
+  res.status(200).json(assignment);
 };
 
 //update an assignemnt
@@ -53,7 +53,7 @@ const updateAssignment = async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).json({ error: "No Such Valid Assignment" });
 
-  const assignment = await Assignemnt.findOneAndUpdate(
+  const assignment = await Assignment.findOneAndUpdate(
     { _id: id },
     { ...req.body }
   );
