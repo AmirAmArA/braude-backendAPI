@@ -1,12 +1,14 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const fileRoute = require("./routes/files");
 const coursesRoute = require("./routes/courses");
 const studentsRoute = require("./routes/students");
 const assignmentRoute = require("./routes/assignments");
 const userRoute = require("./routes/users");
 const submissionRouter = require("./routes/submissions");
 const bodyParser = require("body-parser");
+
 require("dotenv").config();
 
 const app = express();
@@ -33,6 +35,7 @@ app.use("/api/courses", coursesRoute);
 app.use("/api/students", studentsRoute);
 app.use("/api/assignment", assignmentRoute);
 app.use("/api/submission", submissionRouter);
+app.use("/api/file", fileRoute);
 app.use("/api/user", userRoute);
 
 mongoose.set("strictQuery", false);
