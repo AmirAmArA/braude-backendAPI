@@ -21,13 +21,14 @@ const getSingleAssignment = async (req, res) => {
 
 // create a new assignment
 const createAssignment = async (req, res) => {
-  const { name, deadLine, course, assignemntStatus } = req.body;
+  const { name, deadLine, course, assignemntStatus, file } = req.body;
   try {
     const assignemnt = await Assignment.create({
       name,
       deadLine,
       course,
       assignemntStatus,
+      file,
     });
     res.status(200).json(assignemnt);
   } catch (error) {
