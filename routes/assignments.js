@@ -17,6 +17,8 @@ router.use(requireAuth);
 
 router.get("/", getAssignments);
 
+router.get("/:id/grades", getSinglAssignmentGrades);
+
 router.get("/:id", getSingleAssignment);
 
 router.post("/add-a-assignment", checkProfAuthorization, createAssignment);
