@@ -1,5 +1,6 @@
 const Assignment = require("../models/Assignment.model");
 const mongoose = require("mongoose");
+const Submission = require("../models/Submission.model");
 
 //get all assignment
 const getAssignments = async (req, res) => {
@@ -7,6 +8,19 @@ const getAssignments = async (req, res) => {
     .sort({ createdAt: -1 })
     .populate("course");
   res.status(200).json(assignemnts);
+};
+
+const getSinglAssignmentGrades = async (req, res) => {
+  const { id } = req.params;
+  const submissions = await Submission.find({ parentAssignment: id }).sort({
+    submissionDate: -1,
+  });
+
+  if (!submissions) {
+    return res.status(404).json({ error: "Submissions not found" });
+  }
+
+  res.status(200).json(submissions);
 };
 
 //get a single assignment
@@ -71,4 +85,5 @@ module.exports = {
   getSingleAssignment,
   deleteAssignment,
   updateAssignment,
+  getSinglAssignmentGrades,
 };
