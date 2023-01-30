@@ -1,6 +1,6 @@
 const Student = require("../models/Student.model");
 const mongoose = require("mongoose");
-
+const Submission = require("../models/Submission.model");
 //get all students
 const getStudents = async (req, res) => {
   const students = await Student.find({}).sort({ createdAt: -1 });
@@ -16,6 +16,19 @@ const getSingleStudent = async (req, res) => {
   const student = await Student.findById(id);
   if (!student) return res.status(404).json({ error: " no such student" });
   res.status(200).json(student);
+};
+
+//get student grades
+const getSingleStudentGrades = async (req, res) => {
+  const { id } = req.params;
+  if (!mongoose.Types.ObjectId.isValid(id))
+    return res.status(404).json({ error: "no such valid id" });
+
+  const studentGrades = await Submission.find({ student: id }).sort({
+    createdAt: -1,
+  });
+
+  res.status(200).json(studentGrades);
 };
 
 //create a new student
@@ -57,4 +70,5 @@ module.exports = {
   deleteStudent,
   updateStudent,
   createStudent,
+  getSingleStudentGrades,
 };

@@ -7,7 +7,10 @@ const {
   deleteCourse,
   updateCourse,
 } = require("../controllers/courseController");
-const requireAuth = require("../middlewares/requireAuth");
+const {
+  checkProfAuthorization,
+  requireAuth,
+} = require("../middlewares/requireAuth");
 
 router.use(requireAuth);
 
@@ -15,10 +18,10 @@ router.get("/", getCourses);
 
 router.get("/:id", getSingleCourse);
 
-router.post("/add-a-course", createCourse);
+router.post("/add-a-course", checkProfAuthorization, createCourse);
 
-router.delete("/:id", deleteCourse);
+router.delete("/:id", checkProfAuthorization, deleteCourse);
 
-router.patch("/:id", updateCourse);
+router.patch("/:id", checkProfAuthorization, updateCourse);
 
 module.exports = router;

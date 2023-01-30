@@ -8,7 +8,10 @@ const {
   deleteAssignment,
   updateAssignment,
 } = require("../controllers/assignmentController");
-const requireAuth = require("../middlewares/requireAuth");
+const {
+  checkProfAuthorization,
+  requireAuth,
+} = require("../middlewares/requireAuth");
 
 router.use(requireAuth);
 
@@ -16,10 +19,10 @@ router.get("/", getAssignments);
 
 router.get("/:id", getSingleAssignment);
 
-router.post("/add-a-assignment", createAssignment);
+router.post("/add-a-assignment", checkProfAuthorization, createAssignment);
 
-router.delete("/:id", deleteAssignment);
+router.delete("/:id", checkProfAuthorization, deleteAssignment);
 
-router.patch("/:id", updateAssignment);
+router.patch("/:id", checkProfAuthorization, updateAssignment);
 
 module.exports = router;

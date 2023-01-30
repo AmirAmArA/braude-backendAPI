@@ -36,4 +36,11 @@ const requireAuth = async (req, res, next) => {
   }
 };
 
-module.exports = requireAuth;
+const checkProfAuthorization = async (req, res, next) => {
+  const { role } = req.headers;
+  if (!(role === "PROFESSOR"))
+    return res.status(404).json({ error: "not authorized" });
+  next();
+};
+
+module.exports = { requireAuth, checkProfAuthorization };
