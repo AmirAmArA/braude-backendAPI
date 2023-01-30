@@ -6,19 +6,25 @@ const {
   createStudent,
   deleteStudent,
   updateStudent,
+  getSingleStudentGrades,
 } = require("../controllers/studentController");
-const requireAuth = require("../middlewares/requireAuth");
+const {
+  requireAuth,
+  checkProfAuthorization,
+} = require("../middlewares/requireAuth");
 
 router.use(requireAuth);
 
-router.get("/", getStudents);
+router.get("/", checkProfAuthorization, getStudents);
 
-router.get("/:id", getSingleStudent);
+router.get("/:id/grades", getSingleStudentGrades);
 
-router.post("/add-a-student", createStudent);
+router.get("/:id", checkProfAuthorization, getSingleStudent);
 
-router.delete("/:id", deleteStudent);
+router.post("/add-a-student", checkProfAuthorization, createStudent);
 
-router.patch("/:id", updateStudent);
+router.delete("/:id", checkProfAuthorization, deleteStudent);
+
+router.patch("/:id", checkProfAuthorization, updateStudent);
 
 module.exports = router;

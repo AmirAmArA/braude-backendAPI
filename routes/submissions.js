@@ -9,6 +9,10 @@ const {
   updateSubmission,
 } = require("../controllers/submissionController");
 
+const { requireAuth } = require("../middlewares/requireAuth");
+
+router.use(requireAuth);
+
 router.get("/", getSubmissions);
 
 router.get("/:id", getSingleSubmission);
