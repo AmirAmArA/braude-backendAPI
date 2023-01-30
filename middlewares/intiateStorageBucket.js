@@ -69,13 +69,10 @@ const uploadMiddleware = (req, res, next) => {
     if (err instanceof multer.MulterError) {
       return res.status(400).send("File too large");
     } else if (err) {
-      // check if our filetype error occurred
       if (err === "filetype")
         return res.status(400).send("PDF PowerPoint Word files only");
-      // An unknown error occurred when uploading.
       return res.sendStatus(500);
     }
-    // all good, proceed
     next();
   });
 };

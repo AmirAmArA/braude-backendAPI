@@ -3,7 +3,10 @@ const mongoose = require("mongoose");
 const Assignment = require("../models/Assignment.model");
 // get all submissions
 const getSubmissions = async (req, res) => {
-  const submissions = await Submission.find({}).sort({ createdAt: -1 });
+  const submissions = await Submission.find({})
+    .sort({ createdAt: -1 })
+    .populate("parentAssignment")
+    .populate("student");
   res.status(200).json(submissions);
 };
 
@@ -13,7 +16,9 @@ const getSingleSubmission = async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).json({ error: "no valid submission id found" });
 
-  const submission = await Submission.findById(id);
+  const submission = await Submission.findById(id)
+    .populate("parentAssignment")
+    .populate("student");
   if (!submission)
     return res.status(404).json({ error: "no valid submission found" });
 

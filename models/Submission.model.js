@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 const Assignment = require("./Assignment.model");
 const File = require("./File.model");
+const Student = require("./Student.model");
 
 const submissionSchema = new Schema(
   {
@@ -28,6 +29,10 @@ const submissionSchema = new Schema(
     parentAssignment: {
       type: mongoose.Schema.Types.ObjectId,
       ref: Assignment,
+    },
+    student: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: Student,
     },
   },
   { timestamps: true }
