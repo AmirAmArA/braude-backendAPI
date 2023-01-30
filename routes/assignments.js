@@ -7,6 +7,7 @@ const {
   getSingleAssignment,
   deleteAssignment,
   updateAssignment,
+  getSinglAssignmentGrades,
 } = require("../controllers/assignmentController");
 const {
   checkProfAuthorization,
