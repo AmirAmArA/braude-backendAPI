@@ -26,7 +26,7 @@ app.use(
   })
 );
 app.use((req, res, next) => {
-  console.log(req.path, req.method, req.headers, req.body);
+  console.log(req.path, req.method);
   next();
 });
 
