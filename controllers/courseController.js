@@ -2,7 +2,9 @@ const Course = require("../models/Course.model");
 const mongoose = require("mongoose");
 //get all courses
 const getCourses = async (req, res) => {
-  const courses = await Course.find({}).sort({ createdAt: -1 });
+  const courses = await Course.find({})
+    .sort({ createdAt: -1 })
+    .populate("students");
   res.status(200).json(courses);
 };
 // get a single course
@@ -11,7 +13,7 @@ const getSingleCourse = async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).json({ error: "no such valid id" });
 
-  const course = await Course.findById(id);
+  const course = await Course.findById(id).populate("students");
   if (!course) return res.status(404).json({ error: "No Such Course" });
   res.status(200).json(course);
 };

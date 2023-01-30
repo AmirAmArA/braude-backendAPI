@@ -3,7 +3,9 @@ const mongoose = require("mongoose");
 
 //get all assignment
 const getAssignments = async (req, res) => {
-  const assignemnts = await Assignment.find({}).sort({ createdAt: -1 });
+  const assignemnts = await Assignment.find({})
+    .sort({ createdAt: -1 })
+    .populate("course");
   res.status(200).json(assignemnts);
 };
 
@@ -13,7 +15,7 @@ const getSingleAssignment = async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).json({ error: "No Such Valid ID" });
 
-  const assignemnt = await Assignment.findById(id);
+  const assignemnt = await Assignment.findById(id).populate("course");
   if (!assignemnt)
     return res.status(404).json({ error: "No Such Valid Assignment" });
   res.status(200).json(assignemnt);
