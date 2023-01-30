@@ -1,7 +1,7 @@
 const Student = require("../models/Student.model");
 const mongoose = require("mongoose");
 const Submission = require("../models/Submission.model");
-//get all courses
+//get all students
 const getStudents = async (req, res) => {
   const students = await Student.find({}).sort({ createdAt: -1 });
   res.status(200).json(students);
