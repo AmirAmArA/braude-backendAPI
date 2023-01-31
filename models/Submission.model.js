@@ -14,9 +14,6 @@ const submissionSchema = new Schema(
       type: Date,
       require: true,
     },
-    submittedFile: {
-      type: String,
-    },
     grade: {
       type: Number,
       min: 0,
