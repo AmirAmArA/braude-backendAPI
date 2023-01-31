@@ -13,10 +13,10 @@ const loginUser = async (req, res) => {
     case "PROFESSOR":
       try {
         const user = await Professor.login(email, password);
-
+        const id = user._id;
         //create a token for login
-        const token = createToken(user._id);
-        res.status(200).json({ email, role, token });
+        const token = createToken(id);
+        res.status(200).json({ email, role, token, id });
       } catch (error) {
         res.status(400).json({ error: error.message });
       }
@@ -24,9 +24,11 @@ const loginUser = async (req, res) => {
     case "STUDENT":
       try {
         const user = await Student.login(email, password);
+        const id = user._id;
+
         //create a token for login
-        const token = createToken(user._id);
-        res.status(200).json({ email, role, token });
+        const token = createToken(id);
+        res.status(200).json({ email, role, token, id });
       } catch (error) {
         res.status(400).json({ error: error.message });
       }

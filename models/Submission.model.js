@@ -19,6 +19,9 @@ const submissionSchema = new Schema(
       min: 0,
       max: 100,
     },
+    freeText: {
+      type: String,
+    },
     file: {
       type: mongoose.Schema.Types.ObjectId,
       ref: File,
