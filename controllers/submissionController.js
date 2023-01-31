@@ -36,9 +36,9 @@ const createSubmission = async (req, res) => {
     const submission = await Submission.create(
       name,
       submissionDate,
-      submittedFile,
       parentAssignment,
-      file
+      file,
+      grade
     );
     res.status(200).json(submission);
   } catch (error) {

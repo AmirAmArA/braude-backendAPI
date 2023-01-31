@@ -3,7 +3,7 @@ const Student = require("../models/Student.model");
 const Professor = require("../models/Professor.model");
 
 const createToken = (_id) => {
-  return jwt.sign({ _id }, process.env.SECRET, { expiresIn: "3d" });
+  return jwt.sign({ _id }, process.env.SECRET, { expiresIn: "10d" });
 };
 
 const loginUser = async (req, res) => {
