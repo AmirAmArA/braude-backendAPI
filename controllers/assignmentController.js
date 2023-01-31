@@ -6,7 +6,7 @@ const Submission = require("../models/Submission.model");
 const getAssignments = async (req, res) => {
   const assignemnts = await Assignment.find({})
     .sort({ createdAt: -1 })
-    .populate("course");
+    .populate("parentCourse");
   res.status(200).json(assignemnts);
 };
 
@@ -29,7 +29,7 @@ const getSingleAssignment = async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).json({ error: "No Such Valid ID" });
 
-  const assignemnt = await Assignment.findById(id).populate("course");
+  const assignemnt = await Assignment.findById(id).populate("parentCourse");
   if (!assignemnt)
     return res.status(404).json({ error: "No Such Valid Assignment" });
   res.status(200).json(assignemnt);
@@ -37,7 +37,8 @@ const getSingleAssignment = async (req, res) => {
 
 // create a new assignment
 const createAssignment = async (req, res) => {
-  const { name, deadLine, parentCourse, assignmentStatus, assignmentfile } = req.body;
+  const { name, deadLine, parentCourse, assignmentStatus, assignmentfile } =
+    req.body;
   try {
     const assignemnt = await Assignment.create({
       name,
