@@ -6,10 +6,6 @@ const Student = require("./Student.model");
 
 const submissionSchema = new Schema(
   {
-    name: {
-      type: String,
-      require: true,
-    },
     submissionDate: {
       type: Date,
       require: true,
