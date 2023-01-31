@@ -26,8 +26,7 @@ const getSingleSubmission = async (req, res) => {
 };
 // create a submission
 const createSubmission = async (req, res) => {
-  const { name, submissionDate, submittedFile, parentAssignment, file } =
-    req.body;
+  const { name, submissionDate, grade, parentAssignment, file } = req.body;
   const assignment = await Assignment.findById(parentAssignment);
   if (!assignment)
     return res.status(404).json({ error: "no valid assignment found" });
