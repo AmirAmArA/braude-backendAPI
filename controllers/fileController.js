@@ -1,5 +1,16 @@
-const { gfs } = require("../middlewares/intiateStorageBucket");
 const mongoose = require("mongoose");
+
+require("dotenv").config();
+const mongoURI = process.env.URI;
+const conn = mongoose.createConnection(mongoURI);
+let gfs;
+
+conn.once("open", () => {
+  gfs = new mongoose.mongo.GridFSBucket(conn.db, {
+    bucketName: "files",
+  });
+});
+
 const deleteImage = (id) => {
   if (!id || id === "undefined") return res.status(400).send("no file id");
   const _id = new mongoose.Types.ObjectId(id);
@@ -26,17 +37,19 @@ const uploadFile = async (req, res) => {
 
 const getSingleFile = async (req, res) => {
   const { id } = req.params;
-
   if (!id || id === "undefined") return res.status(400).send("no file id");
 
   const _id = new mongoose.Types.ObjectId(id);
-
-  gfs.find({ _id }).toArray((err, files) => {
-    if (!files || files.length === 0)
-      return res.status(400).send("no files exist");
-    // if a file exists, send the data
-    gfs.openDownloadStream(_id).pipe(res);
-  });
+  try {
+    gfs.find({ _id }).toArray((err, files) => {
+      if (!files || files.length === 0)
+        return res.status(400).send("no files exist");
+      // if a file exists, send the data
+      gfs.openDownloadStream(_id).pipe(res);
+    });
+  } catch (error) {
+    return res.status(400).send({ error: error.message });
+  }
 };
 
 module.exports = { getSingleFile, uploadFile };

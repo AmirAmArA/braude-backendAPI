@@ -1,4 +1,3 @@
-const mongoose = require("mongoose");
 const { GridFsStorage } = require("multer-gridfs-storage");
 const multer = require("multer");
 const crypto = require("crypto");
@@ -6,14 +5,6 @@ const path = require("path");
 require("dotenv").config();
 
 const mongoURI = process.env.URI;
-const conn = mongoose.createConnection(mongoURI);
-
-let gfs;
-conn.once("open", () => {
-  gfs = new mongoose.mongo.GridFSBucket(conn.db, {
-    bucketName: "files",
-  });
-});
 
 const storage = new GridFsStorage({
   url: mongoURI,
@@ -77,4 +68,4 @@ const uploadMiddleware = (req, res, next) => {
   });
 };
 
-module.exports = { uploadMiddleware, gfs };
+module.exports = { uploadMiddleware };
