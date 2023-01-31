@@ -1,5 +1,5 @@
 const { gfs } = require("../middlewares/intiateStorageBucket");
-
+const mongoose = require("mnongoose");
 const deleteImage = (id) => {
   if (!id || id === "undefined") return res.status(400).send("no file id");
   const _id = new mongoose.Types.ObjectId(id);
