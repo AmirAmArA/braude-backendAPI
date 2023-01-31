@@ -14,7 +14,7 @@ const assignmentSchema = new Schema({
     type: Date,
     required: true,
   },
-  course: {
+  parentCourse: {
     type: mongoose.Schema.Types.ObjectId,
     ref: Course,
   },
@@ -22,7 +22,7 @@ const assignmentSchema = new Schema({
     type: String,
     enum: assignmentStatus,
   },
-  file: {
+  assignmentfile: {
     type: mongoose.Schema.Types.ObjectId,
     ref: File,
   },
