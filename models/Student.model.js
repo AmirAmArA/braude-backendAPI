@@ -23,6 +23,27 @@ const studentSchema = new Schema(
   { timestamps: true }
 );
 
+studentSchema.statics.getAssignments = function (studentId) {
+  return this.model("Student")
+    .findById(studentId)
+    .populate({
+      path: "course",
+      populate: {
+        path: "assignments",
+        model: "Assignment",
+      },
+    })
+    .then((student) => {
+      const assignments = [];
+      student.courses.forEach((course) => {
+        course.assignments.forEach((assignment) => {
+          assignments.push(assignment);
+        });
+      });
+      return assignments;
+    });
+};
+
 studentSchema.statics.signup = async function (name, email, password) {
   if (!name || !email || !password) throw Error("all fields must be filled");
   if (!validator.isEmail(email)) throw Error("use a valid email");

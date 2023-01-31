@@ -31,6 +31,15 @@ const getSingleStudentGrades = async (req, res) => {
   res.status(200).json(studentGrades);
 };
 
+const getSingleStudentAssignments = async (req, res) => {
+  const { id } = req.body;
+  try {
+    const assignments = await Student.getAssignments(id);
+    res.status(200).json(assignments);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
 //create a new student
 const createStudent = async (req, res) => {
   const { name, email, password } = req.body;
@@ -71,4 +80,5 @@ module.exports = {
   updateStudent,
   createStudent,
   getSingleStudentGrades,
+  getSingleStudentAssignments,
 };

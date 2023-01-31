@@ -7,6 +7,7 @@ const {
   deleteStudent,
   updateStudent,
   getSingleStudentGrades,
+  getSingleStudentAssignments,
 } = require("../controllers/studentController");
 const {
   requireAuth,
@@ -18,6 +19,8 @@ router.use(requireAuth);
 router.get("/", checkProfAuthorization, getStudents);
 
 router.get("/:id/grades", getSingleStudentGrades);
+
+router.get("/:id", checkProfAuthorization, getSingleStudentAssignments);
 
 router.get("/:id", checkProfAuthorization, getSingleStudent);
 
