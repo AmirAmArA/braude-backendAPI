@@ -33,6 +33,7 @@ const getSingleAssignment = async (req, res) => {
     path: "parentCourse",
     populate: { path: "students", model: "Student" },
   });
+
   if (!assignemnt)
     return res.status(404).json({ error: "No Such Valid Assignment" });
   res.status(200).json(assignemnt);
