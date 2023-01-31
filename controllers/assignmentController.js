@@ -29,7 +29,10 @@ const getSingleAssignment = async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).json({ error: "No Such Valid ID" });
 
-  const assignemnt = await Assignment.findById(id).populate("parentCourse");
+  const assignemnt = await Assignment.findById(id).populate({
+    path: "parentCourse",
+    populate: { path: "students", model: "Student" },
+  });
   if (!assignemnt)
     return res.status(404).json({ error: "No Such Valid Assignment" });
   res.status(200).json(assignemnt);
