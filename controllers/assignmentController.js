@@ -37,14 +37,14 @@ const getSingleAssignment = async (req, res) => {
 
 // create a new assignment
 const createAssignment = async (req, res) => {
-  const { name, deadLine, course, assignemntStatus, file } = req.body;
+  const { name, deadLine, parentCourse, assignmentStatus, assignmentfile } = req.body;
   try {
     const assignemnt = await Assignment.create({
       name,
       deadLine,
-      course,
-      assignemntStatus,
-      file,
+      parentCourse,
+      assignmentStatus,
+      assignmentfile,
     });
     res.status(200).json(assignemnt);
   } catch (error) {
