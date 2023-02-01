@@ -28,7 +28,7 @@ studentSchema.statics.getAssignments = async function (studentId) {
   const courses = await this.model("Course").find({
     students: { $elemMatch: { $eq: `${studentId}` } },
   });
-
+  console.log(courses);
   const promises = courses.map(async (course) => {
     const assignment = await this.model("Assignment").find({
       parentCourse: course._id,
