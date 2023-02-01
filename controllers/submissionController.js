@@ -1,6 +1,19 @@
 const Submission = require("../models/Submission.model");
 const mongoose = require("mongoose");
 const Assignment = require("../models/Assignment.model");
+const Student = require("../models/Student.model");
+
+require("dotenv").config();
+const mongoURI = process.env.URI;
+const conn = mongoose.createConnection(mongoURI);
+let gfs;
+
+conn.once("open", () => {
+  gfs = new mongoose.mongo.GridFSBucket(conn.db, {
+    bucketName: "files",
+  });
+});
+
 // get all submissions
 const getSubmissions = async (req, res) => {
   const submissions = await Submission.find({})
@@ -26,18 +39,24 @@ const getSingleSubmission = async (req, res) => {
 };
 // create a submission
 const createSubmission = async (req, res) => {
-  const { grade, parentAssignment, file, freeText } = req.body;
+  const { parentAssignment, file, student } = req.body;
   const assignment = await Assignment.findById(parentAssignment);
   if (!assignment)
     return res.status(404).json({ error: "no valid assignment found" });
 
+  const subFile = await gfs.find({ file });
+  if (!subFile) return res.status(400).send("no files exist");
+
+  const submitterStudent = await Student.findById(student);
+  if (!submitterStudent)
+    return res.status(404).json({ error: "no valid student found" });
+
   try {
-    const submission = await Submission.create(
+    const submission = await Submission.create({
       parentAssignment,
       file,
-      grade,
-      freeText
-    );
+      student,
+    });
     res.status(200).json(submission);
   } catch (error) {
     res.status(400).json({ error: error.message });
