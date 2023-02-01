@@ -20,19 +20,23 @@ const deleteImage = (id) => {
 };
 
 const uploadFile = async (req, res) => {
-  // get the .file property from req that was added by the upload middleware
-  const { file } = req;
-  // and the id of that new image file
-  const { id } = file;
-  // we can set other, smaller file size limits on routes that use the upload middleware
-  // set this and the multer file size limit to whatever fits your project
-  if (file.size > 50000000) {
-    // if the file is too large, delete it and send an error
-    deleteImage(id);
-    return res.status(400).send("file may not exceed 5mb");
+  try {
+    // get the .file property from req that was added by the upload middleware
+    const { file } = req;
+    // and the id of that new image file
+    const { id } = file;
+    // we can set other, smaller file size limits on routes that use the upload middleware
+    // set this and the multer file size limit to whatever fits your project
+    if (file.size > 50000000) {
+      // if the file is too large, delete it and send an error
+      deleteImage(id);
+      return res.status(400).send("file may not exceed 5mb");
+    }
+    console.log("uploaded file: ", file);
+    return res.send(file.id);
+  } catch (error) {
+    return res.status(400).send({ error: error.message });
   }
-  console.log("uploaded file: ", file);
-  return res.send(file.id);
 };
 
 const getSingleFile = async (req, res) => {
