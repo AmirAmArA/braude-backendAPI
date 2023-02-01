@@ -6,21 +6,33 @@ const Submission = require("../models/Submission.model");
 const getAssignments = async (req, res) => {
   const assignemnts = await Assignment.find({})
     .sort({ createdAt: -1 })
-    .populate("parentCourse");
+    .populate({
+      path: "parentCourse",
+      populate: {
+        path: "students",
+        model: "Student",
+      },
+    });
   res.status(200).json(assignemnts);
 };
 
 const getSinglAssignmentGrades = async (req, res) => {
   const { id } = req.params;
-  const submissions = await Submission.find({ parentAssignment: id }).sort({
-    submissionDate: -1,
-  });
+  const submissions = await Submission.find({ parentAssignment: id })
+    .sort({
+      submissionDate: -1,
+    })
+    .populate("student")
+    .populate({
+      path: "parentAssignment",
+      populate: { path: "parentCourse", model: "Course" },
+    });
 
   if (!submissions) {
     return res.status(404).json({ error: "Submissions not found" });
   }
 
-  res.status(200).json(submissions);
+  res.status(200).json({ submissions });
 };
 
 //get a single assignment
