@@ -24,9 +24,14 @@ const getSingleStudentGrades = async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(id))
     return res.status(404).json({ error: "no such valid id" });
 
-  const studentGrades = await Submission.find({ student: id }).sort({
-    createdAt: -1,
-  });
+  const studentGrades = await Submission.find({ student: id })
+    .sort({
+      createdAt: -1,
+    })
+    .populate({
+      path: "parentAssignment",
+      populate: { path: "parentCourse", model: "Course" },
+    });
 
   res.status(200).json(studentGrades);
 };

@@ -30,9 +30,11 @@ studentSchema.statics.getAssignments = async function (studentId) {
   });
   console.log(courses);
   const promises = courses.map(async (course) => {
-    const assignment = await this.model("Assignment").find({
-      parentCourse: course._id,
-    });
+    const assignment = await this.model("Assignment")
+      .find({
+        parentCourse: course._id,
+      })
+      .populate("parentCourse");
     assignments = assignments.concat(assignment);
   });
   await Promise.all(promises);
