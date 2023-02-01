@@ -20,7 +20,7 @@ router.get("/", checkProfAuthorization, getStudents);
 
 router.get("/:id/grades", getSingleStudentGrades);
 
-router.get("/:id", checkProfAuthorization, getSingleStudentAssignments);
+router.get("/:id/assignments",  getSingleStudentAssignments);
 
 router.get("/:id", checkProfAuthorization, getSingleStudent);
 

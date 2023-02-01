@@ -32,7 +32,7 @@ const getSingleStudentGrades = async (req, res) => {
 };
 
 const getSingleStudentAssignments = async (req, res) => {
-  const { id } = req.body;
+  const { id } = req.params;
   try {
     const assignments = await Student.getAssignments(id);
     res.status(200).json(assignments);

@@ -23,25 +23,20 @@ const studentSchema = new Schema(
   { timestamps: true }
 );
 
-studentSchema.statics.getAssignments = function (studentId) {
-  return this.model("Student")
-    .findById(studentId)
-    .populate({
-      path: "course",
-      populate: {
-        path: "assignments",
-        model: "Assignment",
-      },
-    })
-    .then((student) => {
-      const assignments = [];
-      student.courses.forEach((course) => {
-        course.assignments.forEach((assignment) => {
-          assignments.push(assignment);
-        });
-      });
-      return assignments;
+studentSchema.statics.getAssignments = async function (studentId) {
+  let assignments = [];
+  const courses = await this.model("Course").find({
+    students: { $elemMatch: { $eq: `${studentId}` } },
+  });
+
+  const promises = courses.map(async (course) => {
+    const assignment = await this.model("Assignment").find({
+      parentCourse: course._id,
     });
+    assignments = assignments.concat(assignment);
+  });
+  await Promise.all(promises);
+  return assignments;
 };
 
 studentSchema.statics.signup = async function (name, email, password) {
